@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleDetection": "force",
+    "target": "ESNext",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "noImplicitOverride": true,
+    "paths": {
+      "@tests/*": ["./tests/*"],
+      "@lib/*": ["./lib/*"],
+      "@fixtures": ["./fixtures.ts"],
+      "@playwright.config": ["./playwright.config.ts"],
+      "@testconfig": ["./testConfig.ts"],
+      "@faker-js": ["./node_modules/@faker-js/*"]
+    }
+  }
+}
