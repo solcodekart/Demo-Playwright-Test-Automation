@@ -1,19 +1,16 @@
-import { test as base } from "@playwright/test";
+import { test as base } from '@playwright/test';
 
-import PageFactory from "./tests/pages/Page.factory";
-import ApiSteps from "@tests/steps/Api.steps";
-
-type MyFixtures = {
-  apiSteps: ApiSteps;
-};
-
-export const test = base.extend<MyFixtures>({
-  // pageFactory: async ({ page, context }, use) => {
-  //   await use(new MyFixtures(page, context));
-  // },
-  apiSteps: async ({ page, context }, use) => {
-    await use(new ApiSteps(page, context));
-  },
+export const test = base.extend<{}, { forEachWorker: void }>({
+  forEachWorker: [
+    async ({}, use) => {
+      // This code runs before all the tests in the worker process.
+      const workerIndex = test.info().workerIndex;
+      console.log(`Starting test worker #${workerIndex}`);
+      await use();
+      // This code runs after all the tests in the worker process.
+      console.log(`Stopping test worker #${workerIndex}`);
+    },
+    { scope: 'worker', auto: true }, // automatically start for every worker.
+  ],
 });
 
-export { expect } from "@playwright/test";
